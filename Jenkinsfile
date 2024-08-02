@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('start') {
             steps {
-                sh "echo hello jenkins!!!"
+                sh "echo hello jenkins!!?!"
             }
             post {
                 failure {
