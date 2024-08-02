@@ -87,6 +87,24 @@ pipeline {
                 }
             }
         }
+        stage('slack') {
+            steps {
+                slackSend (
+                    channel: '#aws-cloud-school',
+                    color: '#FFFF00',
+                    message: "STARTED: ${currentBuild.number}"
+                )
+
+            }
+            post {
+                failure {
+                    sh "echo clone failed"
+                }
+                success {
+                    sh "echo clone success"
+                }
+            }
+        }
 
     }
 
