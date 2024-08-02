@@ -18,10 +18,10 @@ pipeline {
             }
             post {
                 failure {
-                    sh "echo failed"
+                    sh "echo clone failed"
                 }
                 success {
-                    sh "echo success"
+                    sh "echo clone success"
                 }
             }
         }
@@ -31,13 +31,14 @@ pipeline {
                 sh "docker build -t ${DOCKERHUB}:latest ."
                 // currentBuild.number 젠킨스가 제공하는 빌드넘버 변수
                 // oolralra/fast:<빌드넘버> 와 같은 이미지가 만들어질 예정.
+               
             }
             post {
                 failure {
-                    sh "echo failed"
+                    sh "echo image build failed"
                 }
                 success {
-                    sh "echo success"
+                    sh "echo image build success"
                 }
             }
         }
@@ -45,19 +46,21 @@ pipeline {
             steps {
                 withDockerRegistry(credentialsId: DOCKERHUBCREDENTIAL, url: '') {
                     sh "docker push ${DOCKERHUB}:${currentBuild.number}"
-                    sh "docker push ${DOCKERHUB}:latest"}
-
+                    sh "docker push ${DOCKERHUB}:latest"
+                }
             }
             post {
                 failure {
                     sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
-                    sh "docker image rm -f ${DOCKERHUB}:latest"}
+                    sh "docker image rm -f ${DOCKERHUB}:latest"
                     sh "echo push failed"
+                    // 성공하든 실패하든 로컬에 있는 도커이미지는 삭제
                 }
                 success {
                     sh "docker image rm -f ${DOCKERHUB}:${currentBuild.number}"
-                    sh "docker image rm -f ${DOCKERHUB}:latest"}
-                    sh "echo push failed"
+                    sh "docker image rm -f ${DOCKERHUB}:latest"
+                    sh "echo push success"
+                    // 성공하든 실패하든 로컬에 있는 도커이미지는 삭제
                 }
             }
         }
@@ -74,7 +77,6 @@ pipeline {
                 sh "git remote remove origin"
                 sh "git remote add origin ${GITSSHADD}"
                 sh "git push origin main"
-
             }
             post {
                 failure {
@@ -85,5 +87,7 @@ pipeline {
                 }
             }
         }
+
     }
+
 }
