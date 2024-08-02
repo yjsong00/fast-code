@@ -4,7 +4,7 @@ pipeline {
         GITNAME = "yjsong00"
         GITEMAIL = "yjsong0088@gmail.com"
         GITWEBADD = "https://github.com/yjsong00/fast-code.git"
-        GITSSHADD = "git@github.com:yjsong00/fast-code.git"
+        GITSSHADD = "git@github.com:yjsong00/deployment.git"
         GITCREDENTIAL = "git_cre"
         DOCKERHUB = 'reneeins/fast'
         DOCKERHUBCREDENTIAL = 'docker_cre'
