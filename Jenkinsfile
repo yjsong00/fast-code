@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stages {
+        stages('start') {
             steps {
                 sh "hello jenkins"
             }
